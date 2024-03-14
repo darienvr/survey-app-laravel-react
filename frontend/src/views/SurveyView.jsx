@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import PageComponent from '../components/PageComponent'
 import { PhotoIcon } from '@heroicons/react/24/outline';
 import TButton from '../components/core/TButton';
+import axiosClient from '../axios.js'
 
 const SurveyView = () => {
 
@@ -22,7 +23,13 @@ const SurveyView = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(e);
+        axiosClient.post('/survey', {
+            title: 'Lorem Ipsum',
+            description:'Test',
+            expire_date:'2024-10-10',
+            status:true,
+            questions: []
+        })
     }
 
     const addQuestion = () => {
