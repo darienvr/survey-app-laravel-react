@@ -3,8 +3,11 @@ import PageComponent from '../components/PageComponent'
 import { PhotoIcon } from '@heroicons/react/24/outline';
 import TButton from '../components/core/TButton';
 import axiosClient from '../axios.js'
+import { useNavigate } from 'react-router-dom';
 
 const SurveyView = () => {
+
+    const navigate = useNavigate();
 
     const [survey, setSurvey] = useState({
         title: "",
@@ -17,19 +20,41 @@ const SurveyView = () => {
         questions: [],
     });
 
-    const onImageChoose = () => {
-        console.log("On image choose")
+    const [error, setError] = useState('') 
+
+    const onImageChoose = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = () => {
+            setSurvey({
+                ...survey,
+                image: file,
+                image_url: reader.result
+            })
+            e.target.value = ""
+        }
+        reader.readAsDataURL(file);
     }
 
     const onSubmit = (e) => {
         e.preventDefault();
-        axiosClient.post('/survey', {
-            title: 'Lorem Ipsum',
-            description:'Test',
-            expire_date:'2024-10-10',
-            status:true,
-            questions: []
-        })
+
+        const payload = {...survey};
+        if(payload.image){
+            payload.image = payload.image_url
+        }
+        delete payload.image_url;
+        axiosClient.post('/survey',payload)
+            .then(res=>{
+                console.log(res);
+                navigate('/surveys')
+            })  
+            .catch(err=>{
+                if(err && err.response){
+                    setError(err.response.data.message)
+                }
+                console.log(err, err.response);
+            });
     }
 
     const addQuestion = () => {
@@ -41,11 +66,9 @@ const SurveyView = () => {
         <form action="#" method="POST" onSubmit={onSubmit}>
           <div className="shadow sm:overflow-hidden sm:rounded-md">
             <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
-                
-              {/*error && (
+              {error && (
                 <div className="bg-red-500 text-white py-3 px-3">{error}</div>
-              )*/}
-
+              )}
               {/*Image*/}
               <div>
                 <label className="block text-sm font-medium text-gray-700">
