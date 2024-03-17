@@ -4,6 +4,7 @@ import { PhotoIcon } from '@heroicons/react/24/outline';
 import TButton from '../components/core/TButton';
 import axiosClient from '../axios.js'
 import { useNavigate } from 'react-router-dom';
+import SurveyQuestion from '../components/SurveyQuestion.jsx';
 
 const SurveyView = () => {
 
@@ -41,7 +42,7 @@ const SurveyView = () => {
 
         const payload = {...survey};
         if(payload.image){
-            payload.image = payload.image_url
+            payload.image = payload.image_url;
         }
         delete payload.image_url;
         axiosClient.post('/survey',payload)
@@ -55,6 +56,13 @@ const SurveyView = () => {
                 }
                 console.log(err, err.response);
             });
+    }
+
+    const onQuestionsUpdate = (questions) => {
+        setSurvey({
+            ...survey,
+            questions
+        })
     }
 
     const addQuestion = () => {
@@ -194,6 +202,8 @@ const SurveyView = () => {
                 </div>
               </div>
               {/*Active*/}
+
+              <SurveyQuestion survey={survey} onQuestionsUpdate={onQuestionsUpdate} />
 
             {/*
               <button type="button" onClick={addQuestion}>

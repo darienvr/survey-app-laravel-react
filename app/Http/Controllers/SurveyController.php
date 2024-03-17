@@ -15,6 +15,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\Validation\Rules\Enum;
 use App\Enums\QuestionTypeEnum;
 use Illuminate\Support\Arr;
+use Illuminate\Validation\Rule;
 
 class SurveyController extends Controller
 {
@@ -200,8 +201,7 @@ class SurveyController extends Controller
         $validator = Validator::make($data, [
             'question' => 'required|string',
             'type' => [
-                'required', new Enum(QuestionTypeEnum::class)
-            ],
+                'required', new Enum(QuestionTypeEnum::class)],
             'description' => 'nullable|string',
             'data' => 'present',
             'survey_id' => 'exists:App\Models\Survey,id'
