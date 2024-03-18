@@ -5,6 +5,7 @@ import TButton from '../components/core/TButton';
 import axiosClient from '../axios.js'
 import { useNavigate } from 'react-router-dom';
 import SurveyQuestion from '../components/SurveyQuestion.jsx';
+import { v4 as uuidv4} from 'uuid';
 
 const SurveyView = () => {
 
@@ -66,8 +67,15 @@ const SurveyView = () => {
     }
 
     const addQuestion = () => {
-        console.log('add question')
-    }
+        survey.questions.push({
+        id: uuidv4(),
+        type: "text",
+        question: "",
+        description: "",
+        data: {},
+        })
+        setSurvey({...survey})
+    };
 
   return (
     <PageComponent title={"Create new Survey"}>
@@ -203,16 +211,13 @@ const SurveyView = () => {
               </div>
               {/*Active*/}
 
-              <SurveyQuestion survey={survey} onQuestionsUpdate={onQuestionsUpdate} />
-
-            {/*
               <button type="button" onClick={addQuestion}>
                 Add question
               </button>
-              <SurveyQuestions
+              <SurveyQuestion
                 questions={survey.questions}
                 onQuestionsUpdate={onQuestionsUpdate}
-              />*/}
+              />
             </div>
             <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
               <TButton>Save</TButton>
