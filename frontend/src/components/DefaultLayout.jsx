@@ -6,8 +6,8 @@ import { useStateContext } from '../contexts/ContextProvider'
 import axiosClient from '../axios'
 
 const navigation = [
-  { name: 'Dashboard', to: '/', current: true },
-  { name: 'Surveys', to: '/surveys', current: false },
+  { name: 'Dashboard', to: '/' },
+  { name: 'Surveys', to: '/surveys'},
 ]
 
 function classNames(...classes) {
@@ -24,9 +24,8 @@ export default function DefaultLayout() {
 
     const logout = (e) => {
         e.preventDefault();
-        console.log("Logout")
         axiosClient.post('/logout')
-            .then(res=>{
+            .then((res)=>{
                 setCurrentUser({})
                 setUserToken(null)
             })
@@ -37,7 +36,8 @@ export default function DefaultLayout() {
             .then(({data})=>{
                 setCurrentUser(data)
             })
-    })
+    }, [])
+
   return (
     <>
       <div className="min-h-full">

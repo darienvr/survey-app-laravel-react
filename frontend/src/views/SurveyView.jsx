@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PageComponent from '../components/PageComponent'
 import { PhotoIcon } from '@heroicons/react/24/outline';
 import TButton from '../components/core/TButton';
 import axiosClient from '../axios.js'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import SurveyQuestion from '../components/SurveyQuestion.jsx';
 import { v4 as uuidv4} from 'uuid';
 
 const SurveyView = () => {
 
     const navigate = useNavigate();
+    const {id} = useParams()
 
     const [survey, setSurvey] = useState({
         title: "",
@@ -22,6 +23,7 @@ const SurveyView = () => {
         questions: [],
     });
 
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('') 
 
     const onImageChoose = (e) => {
@@ -46,8 +48,14 @@ const SurveyView = () => {
             payload.image = payload.image_url;
         }
         delete payload.image_url;
-        axiosClient.post('/survey',payload)
-            .then(res=>{
+        let res = null;
+        if(id){
+            res = axiosClient.put(`/survey/${id}`, payload)
+        }else{
+            res = axiosClient.post('/survey', payload)
+        }
+        res
+            .then((res)=>{
                 console.log(res);
                 navigate('/surveys')
             })  
@@ -77,9 +85,21 @@ const SurveyView = () => {
         setSurvey({...survey})
     };
 
+    useEffect(()=>{
+        if(id){
+            setLoading(true)
+            axiosClient.get(`/survey/${id}`)
+                .then(({data})=>{
+                    setSurvey(data.data)
+                    setLoading(false)
+                })
+        }
+    },[])
+
   return (
-    <PageComponent title={"Create new Survey"}>
-        <form action="#" method="POST" onSubmit={onSubmit}>
+    <PageComponent title={!id ? "Create new Survey" : "Update Survey"}>
+        {loading && <div className="text-center text-lg">Loading...</div>}
+        {!loading && <form action="#" method="POST" onSubmit={onSubmit}>
           <div className="shadow sm:overflow-hidden sm:rounded-md">
             <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
               {error && (
@@ -223,7 +243,7 @@ const SurveyView = () => {
               <TButton>Save</TButton>
             </div>
           </div>
-        </form>
+        </form>}
     </PageComponent>
   )
 }
