@@ -231,16 +231,14 @@ const SurveyView = () => {
               </div>
               {/*Active*/}
 
-              <button type="button" onClick={addQuestion}>
-                Add question
-              </button>
               <SurveyQuestion
                 questions={survey.questions}
                 onQuestionsUpdate={onQuestionsUpdate}
               />
             </div>
-            <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
+            <div className="bg-gray-50 px-4 py-3 text-right sm:px-6 flex gap-5">
               <TButton>Save</TButton>
+              <button onClick={()=>navigate('/surveys')} className='bg-gray-500 text-white rounded-md px-4 text-sm hover:bg-gray-600'>Cancel</button>
             </div>
           </div>
         </form>}

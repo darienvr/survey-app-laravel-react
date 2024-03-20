@@ -1,14 +1,16 @@
 import React from 'react'
 import { ArrowTopRightOnSquareIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import TButton from "./core/TButton";
+import surveyDefault from '../assets/surveyDefault.webp'
 
 const SurveyListItem = ({survey, onDeleteClick }) => {
+    console.log(survey)
   return (
     <div className="flex flex-col py-4 px-6 shadow-md bg-white hover:bg-gray-50 h-[470px]">
       <img
-        src={survey.image_url}
+        src={`${survey.image_url === null ? surveyDefault : survey.image_url}`}
         alt={survey.title}
-        className="w-full h-48 object-cover"
+        className="w-full h-48 object-cover rounded-md"
       />
       <h4 className="mt-4 text-lg font-bold">{survey.title}</h4>
       <div

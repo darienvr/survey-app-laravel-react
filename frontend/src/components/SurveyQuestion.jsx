@@ -33,7 +33,7 @@ const SurveyQuestion = ({questions, onQuestionsUpdate}) => {
     };
 
     const deleteQuestion = (question) => {
-        const newQuestions = model.questions.filter((q)=>q.id !== question.id);
+        const newQuestions = myQuestions.filter((q)=>q.id !== question.id);
         setMyQuestions(newQuestions);
         onQuestionsUpdate(newQuestions)
     };

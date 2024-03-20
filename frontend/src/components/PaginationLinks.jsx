@@ -52,7 +52,7 @@ const PaginationLinks = ({ meta, onPageClick }) => {
                   "relative z-10 inline-flex items-center border   px-4 py-2 text-sm font-medium focus:z-20 "
                   + (ind === 0 ? 'rounded-l-md ' : '')
                   + (ind === meta.links.length - 1 ? 'rounded-r-md ' : '')
-                  + (link.active ? 'border-indigo-500 bg-indigo-50 text-indigo-600 ' : '')
+                  + (link.active ? ' bg-indigo-50 text-indigo-600 ' : '')
                 }
                 dangerouslySetInnerHTML={{ __html: link.label }}
               >

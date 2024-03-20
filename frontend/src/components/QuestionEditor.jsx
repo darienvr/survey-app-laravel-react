@@ -24,7 +24,7 @@ const QuestionEditor = ({
 
     function shouldHaveOptions(type = null) {
         type = type || model.type
-        return ['select', 'radio', 'checkbox'].includes(model.type)
+        return ['select', 'radio', 'checkbox'].includes(type)
     }
 
     function onTypeChange(e) {
@@ -52,7 +52,7 @@ const QuestionEditor = ({
         setModel({...model})
     }
 
-    function deleteOption(){
+    function deleteOption(op){
         model.data.options = model.data.options.filter(item=>item.uuid != op.uuid)
         setModel({...model})
     }
