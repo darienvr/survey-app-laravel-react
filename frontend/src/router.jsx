@@ -50,7 +50,7 @@ const router = createBrowserRouter([
         ]
     },
     {
-        path: '/surveys/public/:slug',
+        path: '/survey/public/:slug',
         element: <SurveyPublicView/>
     },
 ])

@@ -105,7 +105,7 @@ const SurveyView = () => {
         title={!id ? "Create new Survey" : "Update Survey"}
         buttons={
             <div className='flex gap-2'>
-            <TButton color="green" href={`/surveys/public/${survey.slug}`}>
+            <TButton color="green" href={`/survey/public/${survey.slug}`}>
                 <LinkIcon className="h-4 w-4 mr-2"/>
                 Public Link
             </TButton>
