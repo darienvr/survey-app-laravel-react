@@ -16,7 +16,7 @@ const SurveyPublicView = () => {
     useEffect(() => {
         setLoading(true);
         axiosClient
-          .get(`survey/get-by-slug/${slug}`)
+          .get(`/survey/get-by-slug/${slug}`)
           .then(({ data }) => {
             console.log(data.data)
             setLoading(false);
@@ -66,8 +66,8 @@ const SurveyPublicView = () => {
           </div>
 
           {surveyFinished && (
-            <div className="py-8 px-6 bg-emerald-500 text-white w-[600px] mx-auto">
-              Thank you for participating in the survey
+            <div className="py-8 px-6 text-black w-[800px] mx-auto text-2xl bg-green-100 text-center mt-10 rounded-sm">
+              Thank you for participating in the survey :)
             </div>
           )}
           {!surveyFinished && (

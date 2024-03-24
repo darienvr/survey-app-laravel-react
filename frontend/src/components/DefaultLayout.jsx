@@ -111,7 +111,7 @@ export default function DefaultLayout() {
                                       'block px-4 py-2 text-sm text-gray-700'
                                     }
                                   >
-                                    Sign out
+                                    Logout
                                   </a>
                               </Menu.Item>
                           </Menu.Items>
