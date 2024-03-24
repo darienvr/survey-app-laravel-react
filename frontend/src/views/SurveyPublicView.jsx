@@ -18,20 +18,21 @@ const SurveyPublicView = () => {
         axiosClient
           .get(`survey/get-by-slug/${slug}`)
           .then(({ data }) => {
+            console.log(data.data)
             setLoading(false);
             setSurvey(data.data);
           })
           .catch(() => {
             setLoading(false);
           });
-      }, []);
+    }, []);
 
-      function answerChanged(question, value) {
+    function answerChanged(question, value) {
         answers[question.id] = value;
         console.log(question, value);
-      }
+    }
     
-      function onSubmit(ev) {
+    function onSubmit(ev) {
         ev.preventDefault();
     
         console.log(answers);
@@ -40,9 +41,10 @@ const SurveyPublicView = () => {
             answers,
           })
           .then((response) => {
+            debugger;
             setSurveyFinished(true);
           });
-      }
+    }
 
   return (
     <div>
